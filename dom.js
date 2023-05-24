@@ -1,21 +1,22 @@
-//let headerTitle = document.getElementById(`header-title`);
-//let header = document.getElementById(`main-header`);
-//header.style.borderBottom = `solid 3px #000`;
-//let addTitle = document.querySelector(`.title`);
-//addTitle.style.fontWeight = `bold`;
-//addTitle.style.color = `green`;
+/*
+let headerTitle = document.getElementById(`header-title`);
+let header = document.getElementById(`main-header`);
+header.style.borderBottom = `solid 3px #000`;
+let addTitle = document.querySelector(`.title`);
+addTitle.style.fontWeight = `bold`;
+addTitle.style.color = `green`;
 
-//let items = document.getElementsByClassName(`list-group-item`);
-//console.log(items);
-//change item background color
-//items[2].style.backgroundColor = `green`;
+let items = document.getElementsByClassName(`list-group-item`);
+console.log(items);
+change item background color
+items[2].style.backgroundColor = `green`;
 
-//each item change into bold;
-//for(let i=0; i<items.length; i++){
-//    items[i].style.fontWeight = `bold`;
-//}
+each item change into bold;
+for(let i=0; i<items.length; i++){
+    items[i].style.fontWeight = `bold`;
+}
 
-/*Get item by Tag Name
+Get item by Tag Name
 !--let li = document.getElementsByTagName(`li`);
 console.log(li);
 
@@ -25,9 +26,9 @@ li[2].style.backgroundColor = `green`;
 //Each item change into bold;
 for(let i=0; i<li.length; i++){
     li[i].style.fontWeight = `bold`;
-} */
+}
 
-/* QuerySelector //
+ QuerySelector //
 let secItem = document.querySelector(`.list-group-item:nth-child(2)`);
 secItem.style.backgroundColor = `green`;
 
@@ -41,7 +42,7 @@ for(let i=0; i<odd.length; i++){
 }
 
 let secondItem = document.querySelectorAll(`.list-group-item`);
-secondItem[1].style.color = `green`;*/
+secondItem[1].style.color = `green`;
 
 // Keywords used to manipulate the DOM //
 let itemList = document.querySelector(`#items`);
@@ -97,6 +98,58 @@ let newultext = document.createTextNode('HEllo'); // Create text node
 newul.appendChild(newultext); // Add text to div
 
 let itemTitle = document.querySelector(`#items .list-group-item:first-child`);
-itemTitle.parentNode.insertBefore(newul, itemTitle);
+itemTitle.parentNode.insertBefore(newul, itemTitle); */
 
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
 
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
+
+// Add item
+function addItem(e) {
+  e.preventDefault();
+
+  // Get input value
+  var newItem = document.getElementById('item').value;
+
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
+
+  // Create delete button element
+  var deleteBtn = document.createElement('button');
+  // Add classes to delete button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
+  // Append button to li
+  li.appendChild(deleteBtn);
+
+  // Create edit button element
+  var editBtn = document.createElement('button');
+  // Add classes to edit button
+  editBtn.className = 'btn btn-primary btn-sm float-right edit';
+  // Append text node
+  editBtn.appendChild(document.createTextNode('Edit'));
+  // Append button to li
+  li.appendChild(editBtn);
+
+  // Append li to list
+  itemList.appendChild(li);
+}
+
+// Remove item
+function removeItem(e) {
+  if (e.target.classList.contains('delete')) {
+    if (confirm('Are You Sure?')) {
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
